@@ -4,6 +4,16 @@ import { getMatchAndSortData } from '@utils/pagination';
 import { apiError, success } from '@utils/response';
 
 class BlogController {
+  async createNewBlog(req: Request, res: Response): Promise<void> {
+    const author = (req as any).user.id;
+    const newBlogData = {
+      author,
+      ...req.body,
+    };
+    const newBlog = await BlogService.createBlog(newBlogData);
+    res.status(201).json(success('Blog created successfully', 201, newBlog));
+  }
+
   async getBlogs(req: Request, res: Response): Promise<void> {
     const { matchData, sortData } = await getMatchAndSortData(req);
     const search = req.query.search;
@@ -33,16 +43,6 @@ class BlogController {
     } else {
       res.status(404).json(apiError('Blog not found', 404, {}));
     }
-  }
-
-  async createNewBlog(req: Request, res: Response): Promise<void> {
-    const author = (req as any).user.id;
-    const newBlogData = {
-      author,
-      ...req.body,
-    };
-    const newBlog = await BlogService.createBlog(newBlogData);
-    res.status(201).json(success('Blog created successfully', 201, newBlog));
   }
 
   async updateExistingBlog(req: Request, res: Response): Promise<void> {

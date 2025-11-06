@@ -40,6 +40,10 @@ export interface CustomFile extends Express.Multer.File {
 export const imageFile = uploadImage.single('icon');
 export const authorityImageFile = uploadImage.single('image');
 
+export const projectImageFile = uploadImage.fields([
+  { name: 'image[url]', maxCount: 1 },
+]);
+
 export const testimonialImageFile = uploadImage.fields([
   { name: 'image', maxCount: 1 },
 ]);
