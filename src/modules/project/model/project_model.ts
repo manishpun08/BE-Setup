@@ -7,7 +7,7 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 export interface IProject extends Document {
   title: string;
   description: string;
-  img: string;
+  image: string[];
   iconLists: string[];
   link: string;
 }
@@ -15,11 +15,11 @@ export interface IProject extends Document {
 // Define the Project schema
 const projectSchema = new Schema<IProject>(
   {
-    title: { type: String, required: true, trim: true },
-    description: { type: String, required: true, trim: true },
-    img: { type: String, required: true },
-    iconLists: { type: [String], required: true },
-    link: { type: String, required: true },
+    title: { type: String, required: false, trim: true },
+    description: { type: String, required: false, trim: true },
+    image: { type: [String], required: false },
+    iconLists: { type: [String], required: false },
+    link: { type: String, required: false },
   },
   { timestamps: true },
 );
@@ -40,7 +40,7 @@ projectSchema.set('toJSON', {
       id: ret._id,
       title: ret.title,
       descriptioncription: ret.description,
-      image: ret.img,
+      image: ret.image,
       icons: ret.iconLists,
       link: ret.link,
       created_date: getFormattedDate(ret.createdAt),

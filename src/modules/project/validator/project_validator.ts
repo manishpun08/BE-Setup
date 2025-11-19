@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 export const createProjectValidator = [
   body('title').notEmpty().withMessage('Title is required'),
   body('description').notEmpty().withMessage('Description is required'),
-  body('img').notEmpty().withMessage('Image URL is required'),
+  body('image').notEmpty().withMessage('Image URL is required'),
   body('link').notEmpty().withMessage('Link is required'),
   body('iconLists')
     .isArray({ min: 1 })
@@ -13,7 +13,7 @@ export const createProjectValidator = [
 export const updateProjectValidator = [
   body('title').optional().notEmpty(),
   body('description').optional().notEmpty(),
-  body('img').optional().notEmpty(),
+  body('image').optional().notEmpty(),
   body('link').optional().notEmpty(),
   body('iconLists').optional().isArray(),
 ];
