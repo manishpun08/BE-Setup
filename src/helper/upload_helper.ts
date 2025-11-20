@@ -41,7 +41,8 @@ export const imageFile = uploadImage.single('icon');
 export const authorityImageFile = uploadImage.single('image');
 
 export const projectImageFile = uploadImage.fields([
-  { name: 'imageurl', maxCount: 1 },
+  { name: 'image', maxCount: 1 },
+  { name: 'iconImages', maxCount: 20 },
 ]);
 
 export const galleryImagesUpload = uploadImage.fields([

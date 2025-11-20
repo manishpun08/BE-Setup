@@ -14,53 +14,54 @@ import { createProjectValidator } from '../validator/project_validator';
 const router = express.Router();
 
 // create project, only superadmin
-// router.post(
-//   '/create',
-//   // authenticateToken,
-//   // checkRole(['superadmin']),
-//   projectImageFile,
-//   (req: Request, res: Response, next: NextFunction): void => {
-//     const files = req.files as { [fieldname: string]: CustomFile[] };
-//     if (files['imageurl'] && files['imageurl'].length > 0) {
-//       const filename = path.basename(files['imageurl'][0].path);
-//       req.body.image = `${process.env.IMAGE_URL}/images/${filename}`;
-//     }
-
-//     next();
-//   },
-
-//   // validateSchema(createProjectValidator),
-//   catchAsync(ProjectController.createNewProject),
-// );
-
 router.post(
   '/create',
-  galleryImagesUpload,
+  // authenticateToken,
+  // checkRole(['superadmin']),
+  projectImageFile,
   (req: Request, res: Response, next: NextFunction): void => {
-    console.log(req.files, 'files');
     const files = req.files as { [fieldname: string]: CustomFile[] };
-    console.log(files, 'filesfdsfds');
-    req.body.image = req.body.image || [];
-    if (typeof req.body.image === 'string') {
-      try {
-        req.body.image = JSON.parse(req.body.image).map(
-          (image: string) => image,
-        );
-      } catch (error) {
-        return next(new Error('Invalid JSON input for ourCulture Images'));
-      }
+    console.log('files', files);
+    if (files['image'] && files['image'].length > 0) {
+      const filename = path.basename(files['image'][0].path);
+      req.body.image = `${process.env.IMAGE_URL}/images/${filename}`;
     }
-    if (files['image']) {
-      files['image'].forEach((file) => {
-        const imageUrl = `${process.env.IMAGE_URL}/images/${file.filename}`;
-        req.body.image.push(imageUrl);
-      });
-    }
+
     next();
   },
 
+  validateSchema(createProjectValidator),
   catchAsync(ProjectController.createNewProject),
 );
+
+// router.post(
+//   '/create',
+//   galleryImagesUpload,
+//   (req: Request, res: Response, next: NextFunction): void => {
+//     console.log(req.files, 'files');
+//     const files = req.files as { [fieldname: string]: CustomFile[] };
+//     console.log(files, 'filesfdsfds');
+//     req.body.image = req.body.image || [];
+//     if (typeof req.body.image === 'string') {
+//       try {
+//         req.body.image = JSON.parse(req.body.image).map(
+//           (image: string) => image,
+//         );
+//       } catch (error) {
+//         return next(new Error('Invalid JSON input for ourCulture Images'));
+//       }
+//     }
+//     if (files['image']) {
+//       files['image'].forEach((file) => {
+//         const imageUrl = `${process.env.IMAGE_URL}/images/${file.filename}`;
+//         req.body.image.push(imageUrl);
+//       });
+//     }
+//     next();
+//   },
+
+//   catchAsync(ProjectController.createNewProject),
+// );
 
 // get all projects
 router.get('/all-project', ProjectController.getAllProjects);

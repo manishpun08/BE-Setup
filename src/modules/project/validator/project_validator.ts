@@ -5,9 +5,9 @@ export const createProjectValidator = [
   body('description').notEmpty().withMessage('Description is required'),
   body('image').notEmpty().withMessage('Image URL is required'),
   body('link').notEmpty().withMessage('Link is required'),
-  body('iconLists')
+  body('iconImages')
     .isArray({ min: 1 })
-    .withMessage('iconLists must be an array with at least one item'),
+    .withMessage('iconImages must be an array with at least one item'),
 ];
 
 export const updateProjectValidator = [
@@ -15,5 +15,5 @@ export const updateProjectValidator = [
   body('description').optional().notEmpty(),
   body('image').optional().notEmpty(),
   body('link').optional().notEmpty(),
-  body('iconLists').optional().isArray(),
+  body('iconImages').optional().isArray(),
 ];
