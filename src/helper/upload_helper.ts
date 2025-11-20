@@ -40,6 +40,15 @@ export interface CustomFile extends Express.Multer.File {
 export const imageFile = uploadImage.single('icon');
 export const authorityImageFile = uploadImage.single('image');
 
+export const projectImageFile = uploadImage.fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'iconImages', maxCount: 20 },
+]);
+
+export const galleryImagesUpload = uploadImage.fields([
+  { name: 'image', maxCount: 50 },
+]);
+
 export const testimonialImageFile = uploadImage.fields([
   { name: 'image', maxCount: 1 },
 ]);
@@ -64,9 +73,9 @@ export const ImageFileUpload = uploadImage.fields([
   { name: 'image', maxCount: 1 },
 ]);
 
-export const galleryImagesUpload = uploadImage.fields([
-  { name: 'images', maxCount: 30 },
-]);
+// export const galleryImagesUpload = uploadImage.fields([
+//   { name: 'images', maxCount: 30 },
+// ]);
 
 export const homePageImageUpload = uploadImage.fields([
   { name: 'approvalPartnerImage', maxCount: 1 },
